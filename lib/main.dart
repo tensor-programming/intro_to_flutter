@@ -15,75 +15,103 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
-
+class MyHomePage extends StatelessWidget {
   final String title;
 
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
-
-  void _decrementCounter() {
-    setState(() {
-      _counter--;
-    });
-  }
-
-  void _resetCounter() {
-    setState(() {
-      _counter = 0;
-    });
-  }
-
+  const MyHomePage({Key key, this.title}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title),
+        title: Text(title),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          CircleAvatar(
+            backgroundImage: NetworkImage(
+              "https://picsum.photos/200/200.jpg",
+            ),
+            radius: 50.0,
+          ),
+          Text(
+            "Some Name",
+            style: TextStyle(
+              color: Colors.blueGrey,
+              fontWeight: FontWeight.bold,
+              fontSize: 40.0,
+            ),
+          ),
+          Text(
+            "Job Title",
+            style: TextStyle(
+              color: Colors.green[400],
+              fontSize: 20.0,
+              letterSpacing: 2.5,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 50.0),
+            child: Divider(
+              color: Colors.teal[400],
+            ),
+          ),
+          InfoBox(
+            text: "123-123-1234",
+            icon: Icons.phone,
+          ),
+          InfoBox(
+            text: "test@test.com",
+            icon: Icons.email,
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class InfoBox extends StatelessWidget {
+  final String text;
+  final IconData icon;
+  const InfoBox({
+    Key key,
+    this.text,
+    this.icon,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.symmetric(
+        vertical: 10.0,
+        horizontal: 25.0,
+      ),
+      height: 50.0,
+      child: Material(
+        elevation: 10.0,
+        child: Row(
           children: <Widget>[
-            Text(
-              'You have pushed the button this many times:',
+            Padding(
+              padding: const EdgeInsets.only(left: 10.0),
+              child: Icon(
+                icon,
+                color: Colors.green,
+              ),
             ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.display1,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                RaisedButton(
-                  child: Text("Increment"),
-                  onPressed: _incrementCounter,
+            Padding(
+              padding: const EdgeInsets.only(left: 30.0),
+              child: Text(
+                text,
+                style: TextStyle(
                   color: Colors.green,
+                  fontSize: 16.0,
                 ),
-                RaisedButton(
-                  child: Text("Decrement"),
-                  onPressed: _decrementCounter,
-                  color: Colors.red,
-                ),
-              ],
+              ),
             )
           ],
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _resetCounter,
-        tooltip: 'Reset Counter',
-        child: Icon(Icons.add),
       ),
     );
   }
